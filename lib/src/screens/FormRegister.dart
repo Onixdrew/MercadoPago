@@ -34,7 +34,7 @@ class _PaginaRegistroState extends State<PaginaRegistro> {
                     const SizedBox(
                       height: 10,
                     ),
-                    const Text("Ir a registrarse..",
+                    const Text("Registrate",
                         style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold)),
                     const SizedBox(

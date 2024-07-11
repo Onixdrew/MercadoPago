@@ -1,5 +1,6 @@
 // //////////////////////////////
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,7 +21,7 @@ class _HomePageState extends State<HomePage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text("Mercadolibre Colombia"),
+              const Text("Mercado libre Colombia"),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/inicio');
@@ -113,12 +114,32 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                     ),
+                    
                   );
+                  
                 },
               ),
             ),
+            const SizedBox(height: 40),
+
           ],
         ),
+      ),
+
+      bottomNavigationBar:BottomNavigationBar(
+        items: [
+
+          BottomNavigationBarItem(
+          icon: Icon(Icons.home, size:30.0, color:Colors.orange[700]),
+          label: "Inicio"),
+          BottomNavigationBarItem(
+          icon: Icon(Icons.shop, size:30.0, color:Colors.orange[700]),
+          label: "Compra"),
+          BottomNavigationBarItem(
+          icon: Icon(Icons.exit_to_app, size:30.0, color:Colors.orange[700]),
+          label: "Salir"),
+
+        ],
       ),
     );
   }

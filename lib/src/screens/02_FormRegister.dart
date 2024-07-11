@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 
-class PaginaRegistro extends StatefulWidget {
-  const PaginaRegistro({super.key});
+class FormRegister extends StatefulWidget {
+  const FormRegister({super.key});
 
   @override
-  State<PaginaRegistro> createState() => _PaginaRegistroState();
+  State<FormRegister> createState() => _FormRegisterState();
 }
 
-class _PaginaRegistroState extends State<PaginaRegistro> {
+class _FormRegisterState extends State<FormRegister> {
   final _formkey = GlobalKey<FormState>();
 
   @override

@@ -1,7 +1,6 @@
-
-import 'package:ecomerce/src/screens/Login.dart';
-import 'package:ecomerce/src/screens/HomePage.dart';
-import 'package:ecomerce/src/screens/FormRegister.dart';
+import 'package:ecomerce/src/screens/01_Login.dart';
+import 'package:ecomerce/src/screens/03_HomePage.dart';
+import 'package:ecomerce/src/screens/02_FormRegister.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,16 +12,15 @@ class MecadoLibre extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // home: HomePage(),
-      // home: PaginaRegistro(),
-      home: Login(),
+      home: const HomePage(),
+      // home: const PaginaRegistro(),
+      // home: const Login(),
 
-      
       routes: {
-        // '/registro' : (context) => PaginaRegistro(),
-        // '/inicio' : (context) => const HomePage()
+        '/inicio': (context) => const HomePage(),
+        '/registro' : (context) => const FormRegister(),
       },
     );
   }

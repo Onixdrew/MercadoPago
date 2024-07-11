@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0)),
                     backgroundColor: Colors.white,
-                    foregroundColor: Colors.lightBlue[400]),
+                    foregroundColor: Colors.purple[900]),
                 child: const Text("Iniciar Sesion"),
               )
             ],

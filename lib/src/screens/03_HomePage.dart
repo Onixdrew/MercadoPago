@@ -14,28 +14,32 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orange[700],
-        foregroundColor: Colors.white,
-        title: Padding(
-          padding: const EdgeInsets.only(top: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text("Mercado libre Colombia"),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/inicio');
-                },
-                style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.purple[900]),
-                child: const Text("Iniciar Sesion"),
-              )
-            ],
-          ),
+      backgroundColor: Colors.orange[700],
+      foregroundColor: Colors.white,
+      title: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text("Mercado libre Colombia"),
+            IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/perfil');
+              },
+             icon: CircleAvatar(
+                  radius: 20, 
+                  
+                  backgroundImage: const NetworkImage('https://st4.depositphotos.com/15648834/23779/v/1600/depositphotos_237795804-stock-illustration-unknown-person-silhouette-profile-picture.jpg'),
+                  child: Icon(
+                    Icons.person,
+                    color: Colors.purple[900],
+                    size: 34, 
+                  ),
+                ),
+            ),
+          ],
         ),
+      ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -120,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            const SizedBox(height: 40),
+            // const SizedBox(height: 40),
 
           ],
         ),

@@ -14,7 +14,7 @@ class Login extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.network(
-                  "https://cdn-icons-png.flaticon.com/128/758/758669.png",
+                  "https://asset.brandfetch.io/idlij9Yj_W/id0c-OL060.jpeg",
                   width: 100,
                   height: 100,
                 ),
@@ -60,7 +60,9 @@ class Login extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/homePage');
+                    },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 15.0),
                       shape: RoundedRectangleBorder(
@@ -125,19 +127,19 @@ class Login extends StatelessWidget {
                   height: 20,
                 ),
                 TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    "¿No tienes cuenta? registrate",
-                    style: TextStyle(color: Colors.blue),
-                  )
-                ),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/registro');
+                    },
+                    child: const Text(
+                      "¿No tienes cuenta? registrate",
+                      style: TextStyle(color: Colors.blue),
+                    )),
                 TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    "¡Olvide mi contraseña!",
-                    style: TextStyle(color: Colors.blue),
-                  )
-                ),
+                    onPressed: () {},
+                    child: const Text(
+                      "¡Olvide mi contraseña!",
+                      style: TextStyle(color: Colors.blue),
+                    )),
               ],
             ),
           ),

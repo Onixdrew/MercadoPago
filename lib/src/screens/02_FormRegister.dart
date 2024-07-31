@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class FormRegister extends StatefulWidget {
   const FormRegister({super.key});
 
@@ -10,6 +9,7 @@ class FormRegister extends StatefulWidget {
 
 class _FormRegisterState extends State<FormRegister> {
   final _formkey = GlobalKey<FormState>();
+  String txtNombres = "";
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +46,12 @@ class _FormRegisterState extends State<FormRegister> {
                           prefixIcon: const Icon(Icons.person_3_sharp),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8))),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "El campo no debe estar vacio";
+                        }
+                        return null;
+                      },
                     ),
                     const SizedBox(
                       height: 10,
@@ -56,6 +62,12 @@ class _FormRegisterState extends State<FormRegister> {
                           prefixIcon: const Icon(Icons.email),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8))),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "El campo no debe estar vacio";
+                        }
+                        return null;
+                      },
                     ),
                     const SizedBox(
                       height: 10,
@@ -66,6 +78,12 @@ class _FormRegisterState extends State<FormRegister> {
                           prefixIcon: const Icon(Icons.password),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8))),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "El campo no debe estar vacio";
+                        }
+                        return null;
+                      },
                     ),
                     const SizedBox(
                       height: 10,
@@ -76,6 +94,12 @@ class _FormRegisterState extends State<FormRegister> {
                           prefixIcon: const Icon(Icons.password),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8))),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "El campo no debe estar vacio";
+                        }
+                        return null;
+                      },
                     ),
                     const SizedBox(
                       height: 30,
@@ -84,7 +108,14 @@ class _FormRegisterState extends State<FormRegister> {
                       height: 50,
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          if (_formkey.currentState!.validate()) {
+                            _formkey.currentState!.save();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("Registro exitoso")),
+                            );
+                          }
+                        },
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.cyan[400],
                             foregroundColor: Colors.white),
@@ -94,7 +125,9 @@ class _FormRegisterState extends State<FormRegister> {
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                       const Text("Tienes una cuenta?"),
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/login');
+                          },
                           child: const Text("Iniciar sesión",
                               style: TextStyle(
                                 color: Colors.blue,

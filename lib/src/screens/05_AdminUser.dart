@@ -1,3 +1,4 @@
+import 'package:ecomerce/src/screens/ModalUsers.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_mercado_proy/src/screens/01_ModalUsers.dart';
 
@@ -47,7 +48,7 @@ class _AdminUsersState extends State<AdminUsers> {
               leading:const Icon(Icons.connect_without_contact_rounded),
               trailing:const Icon(Icons.arrow_circle_right_outlined),
               onTap: () {
-              //  ModalUsuario(context);
+               ModalUsuario(context);
               },
             ),
           ),

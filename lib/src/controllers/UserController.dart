@@ -1,16 +1,19 @@
 // import 'dart:convert';
 // import 'package:http/http.dart' as http;
 
+
+
+
 // //1. Registrar usuarios
 
-// Future<Users> createUsers(String name, String email, String password) async {
+// Future<Users> createUsers(String nombre, String correo, String password) async {
 //   final response = await http.post(
-//     Uri.parse('https://apirestnodeexpressmongodb.onrender.com/api/users'),
+//     Uri.parse('https://api-mercadopago.onrender.com/api/agregarUser'),
 //     headers: <String, String>{
 //       'Content-Type': 'application/json; charset=UTF-8',
 //     },
 //     body: jsonEncode(
-//         <String, String>{"name": name, "email": email, "password": password}),
+//       <String, String>{"nombre": nombre, "correo": correo, "contraseña": password}),
 //   );
 
 //   if (response.statusCode == 201) {
@@ -22,36 +25,48 @@
 
 // class Users {
 //   final String _id;
-//   final name;
-//   final email;
+//   final String nombre;
+//   final String correo;
+//   final String password;
 
-//   const Users({
+//   Users({
 //     required String id,
-//     required this.name,
-//     required this.email,
+//     required this.nombre,
+//     required this.correo,
+//     required this.password,
 //   }): _id = id;
+
+
+
+
 // //metodo utilizado para limpiar los objetos
 //   Users.empty()
 //       : _id = '',
-//         name = '',
-//         email = '';
+//         nombre = '',
+//         correo = '';
+//         password = '';
 
 //   factory Users.fromJson(Map<String, dynamic> json) {
 //     return Users(
 //       id: json['_id'],
-//       name: json['name'],
-//       email: json['email'],
+//       nombre: json['nombre'],
+//       correo: json['correo'],
+//       password: json['contraseña'],
+
 //     );
 //   }
+
+
 //   // Método getter para obtener _id
 //   String get id => _id;
 // }
 
-// //2. Consultar usuarios
-// //1. Hacer una solicitud de red usando el método get
+// /////////////////////////////////////////////
+// //2. Obtener usuarios
+
 // Future<List<Users>> consultUsers() async {
 //   final response = await http.get(
-//       Uri.parse('https://apirestnodeexpressmongodb.onrender.com/api/users'));
+//       Uri.parse('https://api-mercadopago.onrender.com/api/obtenerUser'));
 //   if (response.statusCode == 200) {
 //     List<dynamic> jsonList = jsonDecode(response.body);
 //     return jsonList.map((json) => Users.fromJson(json)).toList();
@@ -61,12 +76,14 @@
 // }
 
 
+
+
 // /////////////////////////////////////////////
 // /// 3. eliminar un usuario
 
 // Future<Users> deleteUsers(String id) async {
 //   final http.Response response = await http.delete(
-//     Uri.parse('https://apirestnodeexpressmongodb.onrender.com/api/users/$id'),
+//     Uri.parse('https://api-mercadopago.onrender.com/api/eliminarUser/$id'),
 //     headers: <String, String>{
 //       'Content-Type': 'application/json; charset=UTF-8',
 //     },
@@ -78,3 +95,107 @@
 //     throw Exception('Failed to delete album.');
 //   }
 // }
+
+
+
+
+// //////////////////////////////////////////////////////////////////////
+
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+class Users {
+  final String id;
+  final String nombre;
+  final String correo;
+  final String password;
+
+  Users({
+    required this.id,
+    required this.nombre,
+    required this.correo,
+    required this.password,
+  });
+
+  // Método utilizado para limpiar los objetos
+  Users.empty()
+      : id = '',
+        nombre = '',
+        correo = '',
+        password = '';
+
+  factory Users.fromJson(Map<String, dynamic> json) {
+    return Users(
+      id: json['_id'],
+      nombre: json['nombre'],
+      correo: json['correo'],
+      password: json['contraseña'],
+    );
+  }
+}
+
+Future<List<Users>> consultUsers() async {
+  try {
+    final response = await http.get(
+      Uri.parse('https://api-mercadopago.onrender.com/api/obtenerUser'),
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonList = jsonDecode(response.body);
+      return jsonList.map((json) => Users.fromJson(json)).toList();
+    } else {
+      print('Failed to load users: ${response.statusCode}');
+      throw Exception('Failed to load users');
+    }
+  } catch (e) {
+    print('Error: $e');
+    throw Exception('Failed to load users');
+  }
+}
+
+Future<Users> createUsers(String nombre, String correo, String password) async {
+  try {
+    final response = await http.post(
+      Uri.parse('https://api-mercadopago.onrender.com/api/agregarUser'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        "nombre": nombre,
+        "correo": correo,
+        "contraseña": password,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      return Users.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+    } else {
+      print('Failed to create user: ${response.statusCode}');
+      throw Exception('No es posible registrarse');
+    }
+  } catch (e) {
+    print('Error: $e');
+    throw Exception('No es posible registrarse');
+  }
+}
+
+Future<Users> deleteUsers(String id) async {
+  try {
+    final http.Response response = await http.delete(
+      Uri.parse('https://api-mercadopago.onrender.com/api/eliminarUser/$id'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return Users.empty();
+    } else {
+      print('Failed to delete user: ${response.statusCode}');
+      throw Exception('Failed to delete user');
+    }
+  } catch (e) {
+    print('Error: $e');
+    throw Exception('Failed to delete user');
+  }
+}

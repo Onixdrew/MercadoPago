@@ -41,7 +41,7 @@ class PerfilUser extends StatelessWidget {
                       color: Colors.blue,
                     ),
                     title: const Text("Genero"),
-                    trailing: const Text("Femenino"),
+                    trailing: const Text("Masculino"),
                     onTap: () {},
                   ),
                   ListTile(

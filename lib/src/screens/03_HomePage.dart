@@ -1,4 +1,5 @@
 // //////////////////////////////
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -103,7 +104,9 @@ class _HomePageState extends State<HomePage> {
                     child: ElevatedButton(
                       // color: Colors.white,
                       onPressed: () {
-                        print('Click en ${categories[index]['titulo']}');
+                        if (kDebugMode) {
+                          print('Click en ${categories[index]['titulo']}');
+                        }
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,

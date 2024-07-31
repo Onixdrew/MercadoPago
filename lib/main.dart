@@ -2,6 +2,7 @@ import 'package:ecomerce/src/screens/01_Login.dart';
 import 'package:ecomerce/src/screens/03_HomePage.dart';
 import 'package:ecomerce/src/screens/02_FormRegister.dart';
 import 'package:ecomerce/src/screens/04_PerfilUser.dart';
+import 'package:ecomerce/src/screens/05_AdminUser.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -24,6 +25,7 @@ class MecadoLibre extends StatelessWidget {
         '/registro' : (context) => const FormRegister(),
         '/login' : (context) => const Login(),
         '/perfil' : (context) => const PerfilUser(),
+        '/adminUser' : (context) => const AdminUsers (),
       },
     );
   }

@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 Navigator.pushNamed(context, '/perfil');
               },
-             icon: CircleAvatar(
+              icon: CircleAvatar(
                   radius: 20, 
                   
                   backgroundImage: const NetworkImage('https://st4.depositphotos.com/15648834/23779/v/1600/depositphotos_237795804-stock-illustration-unknown-person-silhouette-profile-picture.jpg'),
@@ -69,8 +69,10 @@ class _HomePageState extends State<HomePage> {
                   icon: const Icon(Icons.favorite_border),
                 ),
                 IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.notifications),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/adminUser');
+                  },
+                  icon: const Icon(Icons.settings),
                 ),
               ],
             ),

@@ -148,7 +148,7 @@ class _HomePageState extends State<HomePage> {
           label: "Compra"),
           BottomNavigationBarItem(
           icon: Icon(Icons.exit_to_app, size:30.0, color:Colors.orange[700]),
-          label: "Salir"),
+          label: "Salir",),
 
         ],
       ),

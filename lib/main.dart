@@ -1,5 +1,5 @@
 import 'package:ecomerce/src/screens/01_Login.dart';
-import 'package:ecomerce/src/screens/02_FormRegister2.dart';
+import 'package:ecomerce/src/screens/02_FormRegister.dart';
 import 'package:ecomerce/src/screens/03_HomePage.dart';
 // import 'package:ecomerce/src/screens/02_FormRegister.dart';
 import 'package:ecomerce/src/screens/04_PerfilUser.dart';

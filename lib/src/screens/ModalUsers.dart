@@ -1,37 +1,3 @@
-// import 'package:ecomerce/src/controllers/UserController.dart';
-// import 'package:flutter/material.dart';
-
-// ModalUsuario(BuildContext context) {
-//   // final consultaUsuarios = consultausuarios();
-// //  print(consultaUsuarios);
-
-//   consultUsers().then((consultausuarios) {
-//     // print(consultausuarios[1].name);
-//     showModalBottomSheet(
-//         context: context,
-//         builder: (context) {
-//           // return StatefulBuilder(builder: (BuildContext context, stateset))
-//           return Scaffold(
-//             appBar: AppBar(
-//               actions: const [
-//                 Padding(padding: EdgeInsets.all(8), child: Icon(Icons.event)),
-//               ],
-//               backgroundColor: Colors.blue[300],
-//               title: const Text("Usuarios"),
-//             ),
-//             body: ListView.builder(
-//               itemCount: consultausuarios.length,
-//               itemBuilder: (BuildContext context, int index) {
-//                 return ListTile(title: Text(consultausuarios[index].nombre));
-//               },
-//             ),
-//           );
-//         });
-//   });
-// }
-
-// ////////////////////////////////////////////////
-
 import 'package:ecomerce/src/controllers/UserController.dart';
 import 'package:flutter/material.dart';
 
@@ -42,7 +8,6 @@ void ModalUsuario(BuildContext context) {
       context: context,
       builder: (context) {
         return Scaffold(
-            
             appBar: AppBar(
               actions: const [
                 Padding(padding: EdgeInsets.all(8), child: Icon(Icons.event)),
@@ -82,58 +47,80 @@ void ModalUsuario(BuildContext context) {
 }
 
 void _updateUser(BuildContext context, Users user) {
-  // Extrae el ID del usuario
-  String userId = user.id;
+  TextEditingController nombreController =
+      TextEditingController(text: user.nombre);
+  TextEditingController correoController =
+      TextEditingController(text: user.correo);
+  TextEditingController passwordController =
+      TextEditingController(text: user.password);
 
-  // Implementa la lógica de actualización aquí
-  print('Actualizar usuario con ID: $userId y nombre: ${user.nombre}');
-
-  // Mostrar un diálogo para actualizar la información del usuario
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Actualizar Usuario'),
+        title: const Text('Actualizar Usuario'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
-              controller: TextEditingController(text: user.nombre),
-              decoration: InputDecoration(labelText: 'Nombre'),
-              onChanged: (value) {
-                // Actualiza el nombre del usuario en tu aplicación
-              },
+              controller: nombreController,
+              decoration: const InputDecoration(labelText: 'Nombre'),
             ),
             TextField(
-              controller: TextEditingController(text: user.nombre),
-              decoration: InputDecoration(labelText: 'correo'),
-              onChanged: (value) {
-                // Actualiza el nombre del usuario en tu aplicación
-              },
+              controller: correoController,
+              decoration: const InputDecoration(labelText: 'Correo'),
             ),
             TextField(
-              controller: TextEditingController(text: user.nombre),
-              decoration: InputDecoration(labelText: 'Nombre'),
-              onChanged: (value) {
-                // Actualiza el nombre del usuario en tu aplicación
-              },
+              controller: passwordController,
+              decoration: const InputDecoration(labelText: 'Contraseña'),
+              obscureText: true,
             ),
-            // Puedes añadir más campos si es necesario
           ],
         ),
         actions: [
           TextButton(
             onPressed: () {
-              // Implementa la lógica para guardar los cambios
-              Navigator.of(context).pop();
+              String updatedNombre = nombreController.text;
+              String updatedCorreo = correoController.text;
+              String updatedPassword = passwordController.text;
+
+              actualizarUsers(
+                user.id,
+                updatedNombre,
+                updatedCorreo,
+                updatedPassword,
+              ).then((updatedUser) {
+                Navigator.of(context).pop();// Cierra el diálogo
+                 
+
+                if (updatedUser.id.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Usuario actualizado con éxito')),
+                  );
+                  
+
+                  // // Refrescar el modal después de la eliminación exitosa
+              
+                  // ModalUsuario(context); // Volver a abrir el modal con la lista actualizada
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Error al actualizar el usuario')),
+                  );
+                }
+              }).catchError((error) {
+                print('Error: $error');
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Error al actualizar el usuario')),
+                );
+              });
             },
-            child: Text('Guardar'),
+            child: const Text('Guardar'),
           ),
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('Cancelar'),
+            child: const Text('Cancelar'),
           ),
         ],
       );
@@ -142,32 +129,37 @@ void _updateUser(BuildContext context, Users user) {
 }
 
 
+
+
+
 void _deleteUser(BuildContext context, Users user) {
-  // Extrae el ID del usuario
   String userId = user.id;
   print('Eliminar usuario con ID: $userId y nombre: ${user.nombre}');
-  
-  // Llama a la función deleteUsers con el ID del usuario
-  deleteUsers(userId).then((success) {
-    if (success) {
-      // Mostrar un mensaje de éxito o actualizar la UI
+
+  deleteUsers(userId).then((deletedUser) {
+    if (deletedUser.id.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Usuario eliminado con éxito')),
       );
+
+      // Refrescar el modal después de la eliminación exitosa
+      // Navigator.pop(context); // Cerrar el modal actual
+      ModalUsuario(context); // Volver a abrir el modal con la lista actualizada
     } else {
-      // Mostrar un mensaje de error
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error al eliminar el usuario')),
       );
     }
   }).catchError((error) {
-    // Manejar errores en la eliminación
     print('Error: $error');
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Error al eliminar el usuario')),
     );
   });
 }
+
+
+
 
 
 

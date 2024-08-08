@@ -1,7 +1,6 @@
 import 'dart:convert';
+import 'dart:html';
 import 'package:http/http.dart' as http;
-
-
 
 class Users {
   final String id;
@@ -30,7 +29,8 @@ class Users {
       id: json['_id'] ?? '', // Asegúrate de manejar valores nulos
       nombre: json['nombre'] ?? '',
       correo: json['correo'] ?? '',
-      password: json['contraseña'] ?? '', // Cambia esto según el campo real en tu JSON
+      password: json['contraseña'] ??
+          '', // Cambia esto según el campo real en tu JSON
     );
   }
 
@@ -46,9 +46,6 @@ class Users {
 }
 
 
-
-
-
 //1. Registrar usuarios
 
 Future<Users> createUsers(String nombre, String correo, String password) async {
@@ -57,11 +54,11 @@ Future<Users> createUsers(String nombre, String correo, String password) async {
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
-    body: jsonEncode(
-      <String, String>{
-        "nombre": nombre, 
-        "correo": correo, 
-        "contraseña": password}),
+    body: jsonEncode(<String, String>{
+      "nombre": nombre,
+      "correo": correo,
+      "contraseña": password
+    }),
   );
 
   if (response.statusCode == 201) {
@@ -73,23 +70,62 @@ Future<Users> createUsers(String nombre, String correo, String password) async {
 
 
 
-
-
-
-
 /////////////////////////////////////////////
 //2. Obtener usuarios
 
 Future<List<Users>> consultUsers() async {
-  final response = await http.get(
-      Uri.parse('https://api-mercadopago.onrender.com/api/obtenerUser'));
+  final response = await http
+      .get(Uri.parse('https://api-mercadopago.onrender.com/api/obtenerUser'));
   if (response.statusCode == 201) {
     List<dynamic> jsonList = jsonDecode(response.body);
     return jsonList.map((json) => Users.fromJson(json)).toList();
   } else {
-    throw Exception('Failed to load jewelry products'); 
+    throw Exception('Failed to load jewelry products');
   }
 }
+
+
+// //////////////////////////////////////////
+// Actualizar un usuario
+
+
+Future<Users> actualizarUsers(String id, String nombre, String correo, String password) async {
+  final String apiUrl = 'https://api-mercadopago.onrender.com/api/actualizarUser/$id';
+
+  Map<String, String> body = {
+    'nombre': nombre,
+    'correo': correo,
+    'contraseña': password,
+  };
+
+  try {
+    final response = await http.put(
+      Uri.parse(apiUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      // Parsear la respuesta y devolver el usuario actualizado
+      // final Map<String, dynamic> responseData = jsonDecode(response.body);
+      // print(responseData);
+      return Users.empty();
+    } else {
+      throw Exception('Error al actualizar el usuario: ${response.statusCode}');
+    }
+  } catch (error) {
+    throw Exception('Error al conectar con la API: $error');
+  }
+}
+
+
+
+
+
+
+
 
 
 
@@ -98,6 +134,7 @@ Future<List<Users>> consultUsers() async {
 /// 3. eliminar un usuario
 
 Future<Users> deleteUsers(String id) async {
+  // print("Hola desde el controller ID: $id");
   final http.Response response = await http.delete(
     Uri.parse('https://api-mercadopago.onrender.com/api/eliminarUser/$id'),
     headers: <String, String>{
@@ -105,10 +142,11 @@ Future<Users> deleteUsers(String id) async {
     },
   );
 
-  if (response.statusCode == 200) {
+  if (response.statusCode == 201 || response.statusCode == 200 ) {
+    // Ejecuta Users.empty() para limpiar los datos
     return Users.empty();
   } else {
-    throw Exception('Failed to delete album.');
+    throw Exception('Erro al eliminar, desde el controller.');
   }
 }
 
